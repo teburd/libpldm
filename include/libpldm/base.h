@@ -8,7 +8,33 @@ extern "C" {
 
 #include <libpldm/pldm_types.h>
 
+#ifdef CONFIG_PLDM
+
+#include <zephyr/sys/byteorder.h>
+
+#define BIG_ENDIAN CONFIG_BIG_ENDIAN
+#define LITTLE_ENDIAN CONFIG_LITTLE_ENDIAN
+
+#define HTOLE32(X) ((X) = sys_cpu_to_le32(X))
+#define HTOLE16(X) ((X) = sys_cpu_to_le16(X))
+#define LE32TOH(X) ((X) = sys_le32_to_cpu(X))
+#define LE16TOH(X) ((X) = sys_le16_to_cpu(X))
+
+#else
+
 #include <asm/byteorder.h>
+
+#define BIG_ENDIAN __BIG_ENDIAN_BITFIELD
+#define LITTLE_ENDIAN __LITTLE_ENDIAN_BITFIELD
+
+// Macros for byte-swapping variables in-place
+#define HTOLE32(X) ((X) = htole32(X))
+#define HTOLE16(X) ((X) = htole16(X))
+#define LE32TOH(X) ((X) = le32toh(X))
+#define LE16TOH(X) ((X) = le16toh(X))
+
+#endif /* CONFIG_ZEPHYR */
+
 #include <stdalign.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -162,12 +188,6 @@ struct pldm_msg_hdr {
 #endif
 	uint8_t command; //!< PLDM command code
 } __attribute__((packed));
-
-// Macros for byte-swapping variables in-place
-#define HTOLE32(X) ((X) = htole32(X))
-#define HTOLE16(X) ((X) = htole16(X))
-#define LE32TOH(X) ((X) = le32toh(X))
-#define LE16TOH(X) ((X) = le16toh(X))
 
 /** @struct pldm_msg
  *
