@@ -1,0 +1,4 @@
+config PLDM
+	bool "PLDM library"
+	help
+		Enable PLDM support
