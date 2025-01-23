@@ -19,21 +19,21 @@ if(CONFIG_PLDM)
 		${PLDM_ROOT}/src/utils.c
 		${PLDM_ROOT}/src/responder.c
 
-		${PLDM_ROOT}/src/requester/instance-id.c
-		${PLDM_ROOT}/src/requester/pldm.c
+		#${PLDM_ROOT}/src/requester/instance-id.c
+		#${PLDM_ROOT}/src/requester/pldm.c
 
 		${PLDM_ROOT}/src/dsp/base.c
-		${PLDM_ROOT}/src/dsp/bios.c
-		${PLDM_ROOT}/src/dsp/bios_table.c
+		#${PLDM_ROOT}/src/dsp/bios.c
+		#${PLDM_ROOT}/src/dsp/bios_table.c
 		${PLDM_ROOT}/src/dsp/firmware_update.c
 		${PLDM_ROOT}/src/dsp/fru.c
 		${PLDM_ROOT}/src/dsp/pdr.c
 		${PLDM_ROOT}/src/dsp/platform.c
 
-		${PLDM_ROOT}/src/transport/af-mctp.c
-		${PLDM_ROOT}/src/transport/mctp-demux.c
-		${PLDM_ROOT}/src/transport/socket.c
-		${PLDM_ROOT}/src/transport/test.c
-		${PLDM_ROOT}/src/transport/transport.c
+		#${PLDM_ROOT}/src/transport/af-mctp.c
+		#${PLDM_ROOT}/src/transport/mctp-demux.c
+		#${PLDM_ROOT}/src/transport/socket.c
+		#${PLDM_ROOT}/src/transport/test.c
+		#${PLDM_ROOT}/src/transport/transport.c
 	)
 endif() 

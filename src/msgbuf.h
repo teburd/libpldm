@@ -54,7 +54,10 @@ extern "C" {
 #include <stdint.h>
 #include <string.h>
 #include <sys/types.h>
+
+#ifndef CONFIG_PLDM
 #include <uchar.h>
+#endif
 
 /*
  * We can't use static_assert() outside of some other C construct. Deal
@@ -63,10 +66,10 @@ extern "C" {
  * types must have a size.
 */
 static struct {
-	static_assert(
+	BUILD_ASSERT(
 		INTMAX_MAX != SIZE_MAX,
 		"Extraction and insertion value comparisons may be broken");
-	static_assert(INTMAX_MIN + INTMAX_MAX <= 0,
+	BUILD_ASSERT(INTMAX_MIN + INTMAX_MAX <= 0,
 		      "Extraction and insertion arithmetic may be broken");
 	int compliance;
 } build_assertions LIBPLDM_CC_UNUSED;
@@ -367,7 +370,7 @@ pldm__msgbuf_extract_uint16(struct pldm_msgbuf *ctx, void *dst)
 	}
 
 	// Check for underflow while tracking the magnitude of the buffer overflow
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(ldst) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -409,7 +412,7 @@ pldm__msgbuf_extract_int16(struct pldm_msgbuf *ctx, void *dst)
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(ldst) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -444,7 +447,7 @@ pldm__msgbuf_extract_uint32(struct pldm_msgbuf *ctx, void *dst)
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(ldst) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -479,7 +482,7 @@ pldm__msgbuf_extract_int32(struct pldm_msgbuf *ctx, void *dst)
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(ldst) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -510,14 +513,14 @@ pldm__msgbuf_extract_real32(struct pldm_msgbuf *ctx, void *dst)
 {
 	uint32_t ldst;
 
-	static_assert(sizeof(real32_t) == sizeof(ldst),
+	BUILD_ASSERT(sizeof(real32_t) == sizeof(ldst),
 		      "Mismatched type sizes for dst and ldst");
 
 	if (!ctx->cursor) {
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(ldst) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -667,7 +670,7 @@ LIBPLDM_CC_ALWAYS_INLINE int pldm_msgbuf_insert_uint64(struct pldm_msgbuf *ctx,
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(src) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -696,7 +699,7 @@ LIBPLDM_CC_ALWAYS_INLINE int pldm_msgbuf_insert_uint32(struct pldm_msgbuf *ctx,
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(src) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -725,7 +728,7 @@ LIBPLDM_CC_ALWAYS_INLINE int pldm_msgbuf_insert_uint16(struct pldm_msgbuf *ctx,
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(src) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -752,7 +755,7 @@ LIBPLDM_CC_ALWAYS_INLINE int pldm_msgbuf_insert_uint8(struct pldm_msgbuf *ctx,
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(src) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -781,7 +784,7 @@ LIBPLDM_CC_ALWAYS_INLINE int pldm_msgbuf_insert_int32(struct pldm_msgbuf *ctx,
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(src) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -810,7 +813,7 @@ LIBPLDM_CC_ALWAYS_INLINE int pldm_msgbuf_insert_int16(struct pldm_msgbuf *ctx,
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(src) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");
@@ -837,7 +840,7 @@ LIBPLDM_CC_ALWAYS_INLINE int pldm_msgbuf_insert_int8(struct pldm_msgbuf *ctx,
 		return -EINVAL;
 	}
 
-	static_assert(
+	BUILD_ASSERT(
 		// NOLINTNEXTLINE(bugprone-sizeof-expression)
 		sizeof(src) < INTMAX_MAX,
 		"The following addition may not uphold the runtime assertion");

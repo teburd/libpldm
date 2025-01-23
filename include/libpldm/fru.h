@@ -9,7 +9,12 @@ extern "C" {
 #include <libpldm/base.h>
 #include <libpldm/utils.h>
 
+#ifdef CONFIG_PLDM
+#include <zephyr/sys/byteorder.h>
+#else
 #include <asm/byteorder.h>
+#endif /* CONFIG_PLDM */
+
 #include <stddef.h>
 #include <stdint.h>
 

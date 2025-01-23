@@ -33,7 +33,7 @@ extern "C" {
 #define LE32TOH(X) ((X) = le32toh(X))
 #define LE16TOH(X) ((X) = le16toh(X))
 
-#endif /* CONFIG_ZEPHYR */
+#endif /* CONFIG_PLDM */
 
 #include <stdalign.h>
 #include <stdbool.h>
