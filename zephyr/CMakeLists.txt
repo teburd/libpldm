@@ -13,6 +13,7 @@ if(CONFIG_PLDM)
 	zephyr_library_named(modules_pldm)
 	zephyr_library_link_libraries(pldm)
 
+	target_compile_definitions(modules_pldm PUBLIC LIBPLDM_ABI_STABLE=__attribute__\(\(visibility\("default"\)\)\))
 	zephyr_library_sources_ifdef(
 		CONFIG_PLDM
 		${PLDM_ROOT}/src/utils.c
