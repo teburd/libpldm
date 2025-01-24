@@ -13,7 +13,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+
+#ifndef CONFIG_PLDM
 #include <uchar.h>
+#endif
 
 LIBPLDM_ABI_STABLE
 int encode_state_effecter_pdr(
@@ -3199,9 +3202,15 @@ int decode_pldm_entity_auxiliary_names_pdr_index(
 	 * misrepresentation of an ASCII NUL, and that ASCII NUL is
 	 * represented by a single byte.
 	 */
+#ifndef CONFIG_PLDM
 	rc = pldm_msgbuf_init_errno(
 		buf, pdr->name_string_count * (sizeof(char) + sizeof(char16_t)),
 		pdr->auxiliary_name_data, pdr->auxiliary_name_data_size);
+#else
+	rc = pldm_msgbuf_init_errno(
+		buf, pdr->name_string_count * (sizeof(char) + sizeof(uint16_t)),
+		pdr->auxiliary_name_data, pdr->auxiliary_name_data_size);
+#endif
 	if (rc) {
 		return rc;
 	}

@@ -9,7 +9,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-static_assert(PLDM_FIRMWARE_MAX_STRING <= UINT8_MAX, "too large");
+BUILD_ASSERT(PLDM_FIRMWARE_MAX_STRING <= UINT8_MAX, "too large");
 
 /** @brief Check whether string type value is valid
  *

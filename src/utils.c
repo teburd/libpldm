@@ -119,6 +119,10 @@ uint8_t crc8(const void *data, size_t size)
 	}
 #define INSERT_INT(i, b, n) INSERT_CHAR(AS_CHAR(i), (b), (n))
 
+#ifndef SSIZE_MAX
+#define SSIZE_MAX sizeof(uintptr_t)
+#endif
+
 LIBPLDM_ABI_STABLE
 ssize_t ver2str(const ver32_t *version, char *buffer, size_t buffer_size)
 {
@@ -265,3 +269,21 @@ bool is_transfer_flag_valid(uint8_t transfer_flag)
 		return false;
 	}
 }
+
+
+char const *memmem(char const *mem, size_t mem_len, const uint16_t *sub,
+		   size_t sub_len)
+{
+	int i;
+
+	if (sub_len <= mem_len && sub_len > 0) {
+		for (i = 0; i <= mem_len - sub_len; i++) {
+			if (!memcmp(&mem[i], sub, sub_len)) {
+				return &mem[i];
+			}
+		}
+	}
+
+	return NULL;
+}
+

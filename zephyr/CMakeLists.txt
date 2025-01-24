@@ -13,7 +13,7 @@ if(CONFIG_PLDM)
 	zephyr_library_named(modules_pldm)
 	zephyr_library_link_libraries(pldm)
 
-	target_compile_definitions(modules_pldm PUBLIC LIBPLDM_ABI_STABLE=__attribute__\(\(visibility\("default"\)\)\))
+	target_compile_definitions(modules_pldm PUBLIC LIBPLDM_ABI_STABLE=__attribute__\(\(visibility\("default"\)\)\) LIBPLDM_ABI_TESTING= LIBPLDM_ABI_DEPRECATED= LIBPLDM_ABI_DEPRECATED_UNSAFE= LIBPLDM_CC_ALWAYS_INLINE=ALWAYS_INLINE)
 	zephyr_library_sources_ifdef(
 		CONFIG_PLDM
 		${PLDM_ROOT}/src/utils.c

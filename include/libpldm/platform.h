@@ -10,7 +10,10 @@ extern "C" {
 #include <stdalign.h>
 #include <stddef.h>
 #include <stdint.h>
+
+#ifndef CONFIG_PLDM
 #include <uchar.h>
+#endif
 
 #include <libpldm/base.h>
 #include <libpldm/compiler.h>
@@ -866,7 +869,11 @@ struct pldm_numeric_sensor_value_pdr {
 	union_range_field_format fatal_low;
 };
 
+#ifndef CONFIG_PLDM
 typedef char16_t pldm_utf16be;
+#else
+typedef uint16_t pldm_utf16be;
+#endif
 
 struct pldm_entity_auxiliary_name {
 	/* name_language_tag type is char which terminator is 0x00*/
@@ -894,7 +901,7 @@ struct pldm_entity_auxiliary_names_pdr {
 	 * to be an array of UTF16-BE strings followed by an array of ASCII strings,
 	 * with the pairs associated by index, to maintain alignment.
 	 */
-	static_assert(__has_attribute(aligned),
+	BUILD_ASSERT(__has_attribute(aligned),
 		      "auxiliary_name_data risks undefined behaviour");
 	char auxiliary_name_data[]
 		__attribute__((aligned(alignof(pldm_utf16be))));

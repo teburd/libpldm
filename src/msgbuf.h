@@ -1040,7 +1040,11 @@ LIBPLDM_CC_ALWAYS_INLINE int
 pldm_msgbuf_span_string_utf16(struct pldm_msgbuf *ctx, void **cursor,
 			      size_t *length)
 {
+#ifndef CONFIG_PLDM
 	static const char16_t term = 0;
+#else
+	static const uint16_t term = 0;
+#endif
 	ptrdiff_t measured;
 	void *end;
 
@@ -1081,8 +1085,12 @@ pldm_msgbuf_span_string_utf16(struct pldm_msgbuf *ctx, void **cursor,
 		ctx->remaining = -1;
 		return -EOVERFLOW;
 	}
-
+#ifndef CONFIG_PLDM
 	end = (char *)end + sizeof(char16_t);
+#else
+	end = (char *)end + sizeof(uint16_t);
+#endif
+
 	measured = (char *)end - (char *)ctx->cursor;
 
 #if INTMAX_MAX < PTRDIFF_MAX

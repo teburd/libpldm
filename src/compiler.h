@@ -76,4 +76,11 @@ static struct {
 		struct { char buf[_Generic((obj), type: 1, default: -1)]; })))
 // NOLINTEND(bugprone-macro-parentheses)
 
+#ifdef CONFIG_PLDM
+#include <stddef.h>
+
+char const *memmem(char const *mem, size_t mem_len, const uint16_t *sub,
+		   size_t sub_len);
+#endif
+
 #endif

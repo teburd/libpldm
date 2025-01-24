@@ -85,7 +85,7 @@ uint8_t pack_pldm_header(const struct pldm_header_info *hdr,
 	cc = pldm_xlate_errno(rc);
 	assert(cc < UINT8_MAX);
 	if (cc > UINT8_MAX) {
-		static_assert(PLDM_ERROR < UINT8_MAX, "Unable to report error");
+		BUILD_ASSERT(PLDM_ERROR < UINT8_MAX, "Unable to report error");
 		return PLDM_ERROR;
 	}
 
@@ -107,7 +107,7 @@ uint8_t unpack_pldm_header(const struct pldm_msg_hdr *msg,
 	cc = pldm_xlate_errno(rc);
 	assert(cc < UINT8_MAX);
 	if (cc > UINT8_MAX) {
-		static_assert(PLDM_ERROR < UINT8_MAX, "Unable to report error");
+		BUILD_ASSERT(PLDM_ERROR < UINT8_MAX, "Unable to report error");
 		return PLDM_ERROR;
 	}
 

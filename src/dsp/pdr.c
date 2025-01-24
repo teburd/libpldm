@@ -1525,7 +1525,7 @@ int pldm_entity_association_pdr_add_contained_entity_to_remote_pdr(
 	if (rc) {
 		goto cleanup_new_record_data;
 	}
-	static_assert(UINT16_MAX < (SIZE_MAX - sizeof(pldm_entity)),
+	BUILD_ASSERT(UINT16_MAX < (SIZE_MAX - sizeof(pldm_entity)),
 		      "Fix the following bounds check.");
 	if (header_length + sizeof(pldm_entity) > UINT16_MAX) {
 		rc = -EOVERFLOW;
@@ -1630,7 +1630,7 @@ int pldm_entity_association_pdr_create_new(pldm_pdr *repo,
 		return -ENOENT;
 	}
 
-	static_assert(PDR_ENTITY_ASSOCIATION_MIN_SIZE < UINT16_MAX,
+	BUILD_ASSERT(PDR_ENTITY_ASSOCIATION_MIN_SIZE < UINT16_MAX,
 		      "Truncation ahead");
 	new_pdr_size = PDR_ENTITY_ASSOCIATION_MIN_SIZE;
 	pldm_pdr_record *new_record = malloc(sizeof(pldm_pdr_record));
