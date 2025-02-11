@@ -1035,6 +1035,7 @@ pldm_msgbuf_span_string_ascii(struct pldm_msgbuf *ctx, void **cursor,
 	return -EOVERFLOW;
 }
 
+#ifndef __ZEPHYR__
 LIBPLDM_CC_NONNULL_ARGS(1)
 LIBPLDM_CC_ALWAYS_INLINE int
 pldm_msgbuf_span_string_utf16(struct pldm_msgbuf *ctx, void **cursor,
@@ -1120,6 +1121,7 @@ pldm_msgbuf_span_string_utf16(struct pldm_msgbuf *ctx, void **cursor,
 
 	return -EOVERFLOW;
 }
+#endif /* __ZEPHYR__ */
 
 LIBPLDM_CC_NONNULL
 LIBPLDM_CC_ALWAYS_INLINE int
@@ -1241,6 +1243,7 @@ pldm_msgbuf_copy_string_ascii(struct pldm_msgbuf *dst, struct pldm_msgbuf *src)
 	return pldm__msgbuf_insert_array_void(dst, len, ascii, len);
 }
 
+#ifndef __ZEPHYR__
 LIBPLDM_CC_NONNULL
 LIBPLDM_CC_WARN_UNUSED_RESULT
 LIBPLDM_CC_ALWAYS_INLINE int
@@ -1257,6 +1260,7 @@ pldm_msgbuf_copy_string_utf16(struct pldm_msgbuf *dst, struct pldm_msgbuf *src)
 
 	return pldm__msgbuf_insert_array_void(dst, len, utf16, len);
 }
+#endif /* __ZEPHYR__ */
 
 #ifdef __cplusplus
 }

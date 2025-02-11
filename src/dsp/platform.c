@@ -3059,7 +3059,9 @@ int decode_entity_auxiliary_names_pdr(
 	size_t names_len = 0;
 	void *names = NULL;
 	int rc;
+#ifndef __ZEPHYR__
 	int i;
+#endif /* __ZEPHYR__ */
 
 	if (!data || !pdr) {
 		return -EINVAL;
@@ -3127,6 +3129,7 @@ int decode_entity_auxiliary_names_pdr(
 		return rc;
 	}
 
+	#ifndef __ZEPHYR__
 	for (i = 0; i < pdr->name_string_count; i++) {
 		pldm_msgbuf_span_string_ascii(src, NULL, NULL);
 		rc = pldm_msgbuf_copy_string_utf16(dst, src);
@@ -3134,6 +3137,7 @@ int decode_entity_auxiliary_names_pdr(
 			return rc;
 		}
 	}
+	#endif /* __ZEPHYR__ */
 
 	rc = pldm_msgbuf_destroy_consumed(src);
 	if (rc < 0) {
@@ -3146,6 +3150,7 @@ int decode_entity_auxiliary_names_pdr(
 		return rc;
 	}
 
+	#ifndef __ZEPHYR__
 	for (i = 0; i < pdr->name_string_count; i++) {
 		rc = pldm_msgbuf_copy_string_ascii(dst, src);
 		if (rc) {
@@ -3153,6 +3158,7 @@ int decode_entity_auxiliary_names_pdr(
 		}
 		pldm_msgbuf_span_string_utf16(src, NULL, NULL);
 	}
+	#endif /* __ZEPHYR__ */
 
 	if ((rc = pldm_msgbuf_destroy(dst)) ||
 	    (rc = pldm_msgbuf_destroy(src)) ||
@@ -3202,7 +3208,7 @@ int decode_pldm_entity_auxiliary_names_pdr_index(
 	 * misrepresentation of an ASCII NUL, and that ASCII NUL is
 	 * represented by a single byte.
 	 */
-#ifndef CONFIG_PLDM
+#ifndef __ZEPHYR__
 	rc = pldm_msgbuf_init_errno(
 		buf, pdr->name_string_count * (sizeof(char) + sizeof(char16_t)),
 		pdr->auxiliary_name_data, pdr->auxiliary_name_data_size);
@@ -3215,11 +3221,13 @@ int decode_pldm_entity_auxiliary_names_pdr_index(
 		return rc;
 	}
 
+#ifndef __ZEPHYR__
 	for (i = 0; i < pdr->name_string_count; i++) {
 		void *loc = NULL;
 		pldm_msgbuf_span_string_utf16(buf, &loc, NULL);
 		pdr->names[i].name = loc;
 	}
+#endif /* __ZEPHYR__ */
 
 	for (i = 0; i < pdr->name_string_count; i++) {
 		void *loc = NULL;

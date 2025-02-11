@@ -86,7 +86,7 @@ static const uint8_t crc8_table[] = {
 };
 
 LIBPLDM_ABI_STABLE
-uint32_t crc32(const void *data, size_t size)
+uint32_t pldm_crc32(const void *data, size_t size)
 {
 	const uint8_t *p = data;
 	uint32_t crc = ~0U;
@@ -97,7 +97,7 @@ uint32_t crc32(const void *data, size_t size)
 }
 
 LIBPLDM_ABI_STABLE
-uint8_t crc8(const void *data, size_t size)
+uint8_t pldm_crc8(const void *data, size_t size)
 {
 	const uint8_t *p = data;
 	uint8_t crc = 0x00;
@@ -269,21 +269,3 @@ bool is_transfer_flag_valid(uint8_t transfer_flag)
 		return false;
 	}
 }
-
-
-char const *memmem(char const *mem, size_t mem_len, const uint16_t *sub,
-		   size_t sub_len)
-{
-	int i;
-
-	if (sub_len <= mem_len && sub_len > 0) {
-		for (i = 0; i <= mem_len - sub_len; i++) {
-			if (!memcmp(&mem[i], sub, sub_len)) {
-				return &mem[i];
-			}
-		}
-	}
-
-	return NULL;
-}
-

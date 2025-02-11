@@ -5,7 +5,7 @@
 
 #if defined __has_attribute
 
-#if __has_attribute(always_inline)
+#if __has_attribute(always_inline) && !defined(LIBPLDM_CC_ALWAYS_INLINE)
 #define LIBPLDM_CC_ALWAYS_INLINE __attribute__((always_inline)) static inline
 #endif
 
