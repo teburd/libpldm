@@ -9,11 +9,11 @@ extern "C" {
 #include <libpldm/base.h>
 #include <libpldm/utils.h>
 
-#ifdef CONFIG_PLDM
+#ifdef __ZEPHYR__
 #include <zephyr/sys/byteorder.h>
 #else
 #include <asm/byteorder.h>
-#endif /* CONFIG_PLDM */
+#endif /* __ZEPHYR__ */
 
 #include <stddef.h>
 #include <stdint.h>

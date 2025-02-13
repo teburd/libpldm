@@ -8,11 +8,13 @@
 #error The libpldm implementation requires __has_attribute
 #endif
 
-#ifdef CONFIG_PLDM
+#ifdef __ZEPHYR__
 #include <zephyr/toolchain.h>
+#include <stdint.h>
+typedef uint16_t char16_t;
 #else
 #define BUILD_ASSERT static_assert
-#endif /* CONFIG_PLDM */
+#endif /* __ZEPHYR__ */
 
 static struct {
 	BUILD_ASSERT(__has_attribute(always_inline),

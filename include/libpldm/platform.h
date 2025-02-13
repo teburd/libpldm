@@ -11,14 +11,16 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
-#ifndef CONFIG_PLDM
+#ifndef __ZEPHYR__
 #include <uchar.h>
-#endif
+#endif /* __ZEPHYR__ */
 
 #include <libpldm/base.h>
 #include <libpldm/compiler.h>
 #include <libpldm/pdr.h>
 #include <libpldm/pldm_types.h>
+
+#include "compiler.h"
 
 /**
  * @brief PLDM response transfer flag for the Platform and control commands
@@ -869,11 +871,7 @@ struct pldm_numeric_sensor_value_pdr {
 	union_range_field_format fatal_low;
 };
 
-#ifndef CONFIG_PLDM
 typedef char16_t pldm_utf16be;
-#else
-typedef uint16_t pldm_utf16be;
-#endif
 
 struct pldm_entity_auxiliary_name {
 	/* name_language_tag type is char which terminator is 0x00*/

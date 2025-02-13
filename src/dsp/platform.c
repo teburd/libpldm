@@ -14,9 +14,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef CONFIG_PLDM
+#ifndef __ZEPHYR__
 #include <uchar.h>
-#endif
+#endif /* __ZEPHYR__ */
 
 LIBPLDM_ABI_STABLE
 int encode_state_effecter_pdr(

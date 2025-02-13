@@ -8,7 +8,7 @@ extern "C" {
 
 #include <libpldm/pldm_types.h>
 
-#ifdef CONFIG_PLDM
+#ifdef __ZEPHYR__
 
 #include <zephyr/sys/byteorder.h>
 
@@ -33,7 +33,7 @@ extern "C" {
 #define LE32TOH(X) ((X) = le32toh(X))
 #define LE16TOH(X) ((X) = le16toh(X))
 
-#endif /* CONFIG_PLDM */
+#endif /* __ZEPHYR__ */
 
 #include <stdalign.h>
 #include <stdbool.h>
